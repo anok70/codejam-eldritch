@@ -4,6 +4,7 @@ import cardsDataGreen from './data/mythicCards/green/index.js';
 
 let difficult = document.querySelector('.difficulty');
 let shuffleBtn = document.querySelector('.shuffle-button');
+let stack = [];
 
 // нажатие на  кнопку "Средняя"
 difficult.addEventListener('click', diffChoice);
@@ -36,6 +37,17 @@ let deckCardBack = document.querySelector('.deck');
 shuffleBtn.addEventListener('click', () => {
     deckCardBack.classList.add('visible');
     shuffleBtn.classList.remove('visible');
+    
+    let greenStopka = greenRandomArr();
+    let brownStopka = brownRandomArr();
+    let blueStopka = blueRandomArr();
+    
+    stack = [].concat(
+        createCardsForFirstStage(greenStopka, brownStopka, blueStopka), 
+        createCardsForSecondStage(greenStopka, brownStopka, blueStopka), 
+        createCardsForThirdStage(greenStopka, brownStopka, blueStopka)
+    );
+    console.log(stack);
 })
 
 
@@ -99,6 +111,7 @@ function greenRandomArr(){
     let max = cardsDataGreen.length - 1;
     for (let i = 0; i < greenCards(); i++, max--){
         let r = randomNumber(0, max);
+        // console.log(r);
         greenStopka.push(copyCards[r]);
         copyCards.splice(r, 1);
     }
@@ -147,11 +160,7 @@ function shuffle(resultStage) {
     return shuffledResultStage;
 }
 
-let greenStopka = greenRandomArr();
-let brownStopka = brownRandomArr();
-let blueStopka = blueRandomArr();
-
-function createCardsForFirstStage() {
+function createCardsForFirstStage(greenStopka, brownStopka, blueStopka) {
   let resultStage = [];
 
   let greenFirstCount = ancientsData.firstStage.greenCards;
@@ -167,7 +176,7 @@ function createCardsForFirstStage() {
   return shuffledResultStage;
 }
 
-function createCardsForSecondStage() {
+function createCardsForSecondStage(greenStopka, brownStopka, blueStopka) {
     let resultStage = [];
   
     let greenFirstCount = ancientsData.firstStage.greenCards;
@@ -186,7 +195,7 @@ function createCardsForSecondStage() {
     return shuffledResultStage;
 }
 
-function createCardsForThirdStage() {
+function createCardsForThirdStage(greenStopka, brownStopka, blueStopka) {
     let resultStage = [];
   
     let greenFirstCount = ancientsData.firstStage.greenCards;
@@ -205,21 +214,16 @@ function createCardsForThirdStage() {
     return shuffledResultStage;
 }
 
-console.log('green all ', greenStopka);
-console.log('brown all ', brownStopka);
-console.log('blue all ', blueStopka);
+// console.log('green all ', greenStopka);
+// console.log('brown all ', brownStopka);
+// console.log('blue all ', blueStopka);
 
-console.log(createCardsForFirstStage());
-console.log(createCardsForSecondStage());
-console.log(createCardsForThirdStage());
+// console.log(createCardsForFirstStage());
+// console.log(createCardsForSecondStage());
+// console.log(createCardsForThirdStage());
 
-let stack = [].concat(
-    createCardsForFirstStage(), 
-    createCardsForSecondStage(), 
-    createCardsForThirdStage()
-);
 
-console.log(stack);
+
 
 // нажатие на карту("на рубашку")
 
@@ -227,8 +231,14 @@ let lastCard = document.querySelector('.last-card');
 let image = document.querySelector('.image');
 let indexGetCard = 0;
 deckCardBack.addEventListener('click', () => {
+    lastCard.style.marginTop = '0px';
     lastCard.classList.add('visible'); 
     image.setAttribute('src', `${stack[indexGetCard].cardFace}`); 
     indexGetCard ++;
+    if (indexGetCard > stack.length-1){
+        indexGetCard = 0;
+        deckCardBack.classList.remove('visible'); 
+        lastCard.style.marginTop = '210px';
+    }
    
 });
