@@ -70,7 +70,7 @@ body{
 
 .deck {
     display: none;
-    background-image: url("/assets/mythicCardBackground.png");
+    background-image: url("../assets/mythicCardBackground.png");
     background-size: cover;
     height: 190px;
     width: 130px;
