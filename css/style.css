@@ -1,6 +1,6 @@
 
 body{
-    background: url('./assets/home.png') no-repeat;
+    background: url('/assets/home.png') no-repeat;
     background-size:cover;
     
 }
@@ -20,7 +20,7 @@ body{
     height: 260px;
     width: 200px;
     margin: 30px 30px auto 30px;
-    background-image: url('./assets/Ancients/Azathoth.png');
+    background-image: url('/assets/Ancients/Azathoth.png');
 }
 
 .activeBorder {
